@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eastern Ghost Adventures</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= LOADING SCREEN ================= */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    z-index: 9999;
+}
+
+#loader img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    animation: popIn 1.2s ease forwards;
+    opacity: 0;
+}
+
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.6); filter: blur(10px); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+@keyframes flame {
+    from { text-shadow: 0 0 20px orange; }
+    to   { text-shadow: 0 0 40px red; }
+}
+
+.loading-text {
+    margin-top: 10px;
+    font-size: 22px;
+    letter-spacing: 4px;
+    animation: fade 1s infinite alternate;
+}
+
+@keyframes fade {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
+}
+
+/* ================= BACKGROUND VIDEO (SUDAH DIGABUNG) ================= */
+#video-container {
+    position: fixed ;        /* selalu menutup seluruh halaman */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    background-color: #000;
+}
+
+#bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: relativ;      /* full tanpa distorsi */
+    object-position: 50% 50%;
+    transform: translate(0%, 0%) scale(1.40); /* 🔥 BESARIN DI SINI */
+}
+/* ============ GLOBAL ============ */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0a0a0a;
+    color: white;
+    overflow-x: hidden;
+}
+
+section {
+    padding: 70px 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2.2rem;
+    margin-bottom: 35px;
+}
+
+/* ============ HEADER (FULL) ============ */
+header {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* ==== LOGO HEADER ==== */
+.logo img {
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    opacity: 0;
+    animation: logoFade 2.3s ease forwards;
+}
+
+@keyframes logoFade {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+header h1, header h2 {
+    text-shadow: 0px 0px 15px black;
+    animation: fadeIn 2.5s ease forwards;
+}
+
+header h1 { font-size: 3.5rem; }
+header h2 { font-size: 1.7rem; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ ABOUT ============ */
+.about {
+    background: #111;
+}
+
+/* ============ ARTI LOGO ============ */
+.logo-meaning-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.logo-box {
+    background: #111;
+    padding: 20px;
+    border-radius: 12px;
+    width: 230px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.logo-box:hover {
+    transform: scale(1.05);
+}
+
+.logo-box img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+/* ============ JADWAL ============ */
+.schedule-table {
+    max-width: 750px;
+    margin: auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.schedule-table th, .schedule-table td {
+    padding: 15px;
+    border: 1px solid #333;
+}
+
+.schedule-table th {
+    background: #222;
+}
+
+/* ============ SLIDE BUKTI ============ */
+.product-slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px;
+    scroll-behavior: smooth;
+}
+
+.product-slider::-webkit-scrollbar {
+    height: 10px;
+}
+
+.product-slider::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+}
+
+.product-card {
+    min-width: 260px;
+    background: #fff;
+    color: #000;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    padding-bottom: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: scale(1.08);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0;
+}
+
+/* ============ KONTAK ============ */
+.contact {
+    background: #111;
+}
+
+.contact a {
+    color: #00bfff;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.contact a:hover {
+    text-decoration: underline;
+}
+
+/* ============ FOOTER ============ */
+footer {
+    padding: 20px;
+    background: #000;
+    text-align: center;
+    color: #777;
+}
+</style>
+</head>
+<body>
+
+<!-- ========== LOADING SCREEN (PAKAI LOGO) ========== -->
+<div id="loader">
+    <img src="MEZW1326.JPG" alt="Logo">
+    <div class="text-shadow">𝕨𝕖𝕝𝕔𝕠𝕞𝕖 𝕖𝕒𝕤𝕥𝕖𝕣𝕟𝕘𝕙𝕠𝕤𝕥𝕒𝕕𝕧</div>
+</div>
+
+<!-- ========== BACKGROUND VIDEO SUDAH DIGABUNG ========== -->
+<div id="video-container">
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="logo.jpg.mp4" type="video/mp4">
+    </video>
+</div>
+
+
+<!-- ================= HEADER ================= -->
+<header>
+    <div class="logo">
+        <img src="MEZW1326.JPG" alt="Logo">
+    </div>
+    <h1>Eastern Ghost Adventures</h1>
+    <h2>✮ MOUNTAIN — MUSIC — FRIENDSHIP ✮</h2>
+</header>
+
+<!-- ================= ABOUT ================= -->
+<section class="about">
+    <h2>Tentang Kami</h2>
+    <p>Eastern Ghost Adventures adalah kumpulan anak muda yang lahir dari satu kesamaan rasa penasaran yang besar dan keberanian menantang batas. Kami mendaki gunung, melakukan ekspedisi, mendokumentasikan perjalanan, dan mengubah setiap langkah menjadi cerita.
+
+Bagi kami, naik gunung bukan sekadar hobi, ini perjalanan menemukan diri, membangun solidaritas, dan menikmati keindahan alam dari sudut yang hanya bisa dijangkau oleh mereka yang berani melangkah lebih jauh.
+
+Kami percaya satu hal perjalanan paling berharga adalah perjalanan yang dilakukan bersama.
+Itulah kenapa motto kami sederhana tapi kuat:
+“Naik bersama, turun bersama.”
+
+Eastern Ghost Adventures bukan sekadar nama
+ini adalah keluarga, pengalaman, dan jejak yang terus kami tinggalkan di setiap puncak.
+    </p>
+</section>
+
+<!-- ================= ARTI LOGO ================= -->
+<section class="logo-meaning">
+    <h2>Makna Logo Kami</h2>
+
+    <div class="logo-meaning-container">
+
+        <div class="logo-box">
+            <img src="Gunung.JPG" alt="Gunung">
+            <h3>🔺Gunung</h3>
+            <p>Simbol tantangan & tujuan
+Melambangkan perjalanan hidup, proses, dan cita-cita.
+Setiap pendakian = perjuangan, bukan cuma sampai puncak tapi bagaimana prosesnya.
+Cocok dengan jiwa pemuda yang suka menantang batas..</p>
+        </div>
+
+        <div class="logo-box">
+            <img src="Beruang.JPG" alt="Semangat">
+            <h3>🐻Beruang</h3>
+            <p>Simbol kekuatan, keberanian, dan ketahanan
+Beruang adalah hewan yang tenang tapi sangat kuat.
+Tidak agresif tanpa alasan → seperti pendaki yang menghormati alam.
+Melambangkan mental baja, bertahan di kondisi ekstrem, dan tidak mudah menyerah.
+Artinya: kuat tanpa harus sombong..</p>
+        </div>
+
+        <div class="logo-box">
+            <img src="lingkaran.JPG" alt="Persahabatan">
+            <h3>⭕Lingkaran & Nama</h3>
+            <p> Simbol persatuan & kebersamaan
+Tidak ada awal dan akhir → solidaritas tanpa batas.
+Melambangkan komunitas yang solid, saling jaga, saling dukung.
+Cocok dengan filosofi pendakian: naik bareng, turun bareng..</p>
+        </div>
+
+        <div class="logo-box">
+            <img src="bintang.JPG" alt="Arah">
+            <h3>⭐Bintang</h3>
+            <p></p> Simbol harapan & arah
+Bintang adalah penunjuk jalan (navigasi).
+Melambangkan mimpi, tujuan, dan harapan yang selalu jadi pegangan.
+Pendaki tanpa arah akan tersesat — sama seperti hidup.
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= JADWAL ================= -->
+<section class="schedule">
+    <h2>Jadwal Pendakian</h2>
+    <table class="schedule-table">
+        <tr><th>Tanggal</th><th>Gunung</th><th>Status</th></tr>
+        <tr><td> </td><td></td> <td> </td></tr>
+        <tr><td> </td><td> </td><td> </td></tr>
+        <tr><td> </td><td> </td><td> </td></tr>
+    </table>
+</section>
+
+<!-- ================= BUKTI ================= -->
+<section class="gallery">
+    <h2>Bukti Pendakian Kami</h2>
+
+    <div class="product-slider">
+        <div class="product-card"><img src="FOTO1.jpg"><h3>Pendakian Gunung 1</h3></div>
+        <div class="product-card"><img src="FOTO2.jpg"><h3>Pendakian Gunung 2</h3></div>
+        <div class="product-card"><img src="FOTO3.jpg"><h3>Pendakian Gunung 3</h3></div>
+        <div class="product-card"><img src="FOTO4.jpg"><h3>Pendakian Gunung 4</h3></div>
+        <div class="product-card"><img src="FOTO5.jpg"><h3>Pendakian Gunung 5</h3></div>
+    </div>
+</section>
+
+<!-- ================= KONTAK ================= -->
+<section class="contact">
+    <h2>Kontak & Instagram</h2>
+    <p>Instagram: <a href="https://www.instagram.com/easternghostadventures/">@easternghostadventures</a></p>
+    <p>Tiktok: <a href="https://l.instagram.com/?u=https%3A%2F%2Fwww.tiktok.com%2F%40easternghostadventure%3F_t%3D8mDqmoDMUBG%26_r%3D1%26fbclid%3DPAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnpJW8JlA-a0H6J_eqWvH_pRgWZvDDfL5oPhc6GNakNcw1_FcpV_SCzTPb5_A_aem_Xr576CBQjWh-uJh1wrxx_A&e=AT3sySuWbFLEp_cY_dsc48njwdY3sCdn7GuRhbLB03SM5lroVMi14iX0TO-bkKYcdWXaiwuCg81mv6PKRDQskNAGE1ZQkKKZyOYKdvpT2g">@easternghostadventure</a></p>
+    <p>Email: <a href="mailto:easternghostadv@gmail.com">easternghostadv@gmail.com</a></p>
+    <p>WhatsApp: <a href="https://wa.me/+6287828172024">Klik untuk chat</a></p>
+</section>
+
+<footer>
+    ©️ 2025 Eastern Ghost Adventures — The Conqueror!
+</footer>
+
+<!-- ========== MATIKAN LOADER ========== -->
+<script>
+setTimeout(() => {
+    document.getElementById("loader").style.opacity = "0";
+    setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+    }, 800);
+}, 2500);
+</script>
+
+</body>
+</html>
